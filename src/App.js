@@ -11,12 +11,9 @@ import Pages from "./components/Pages/Pages";
 //import SheepList from "./components/SheepList/SheepList";
 
 function App() {
-  
-
   return (
     <div className="App">
       <div>
-        {/* <Head /> */}
         <Pages />
       </div>
     </div>
