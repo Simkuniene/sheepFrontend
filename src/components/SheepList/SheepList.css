@@ -1,0 +1,24 @@
+.mainCardDiv {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* @media screen and (min-width: 600px) {
+   
+    img {width: 100vw;}
+  } */
+
+/* .minMainConteiner {
+  min-width: 350px;
+} */
+.sheepDiv {
+  border: 1px solid grey;
+}
+
+/* img {
+  max-width: 100vw;
+} */
