@@ -1,0 +1,19 @@
+.clickBoxMain {
+  width: 250px;
+  height: 100px;
+  border: 1px solid grey;
+  background-color: rgb(154, 154, 144);
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  justify-content: space-between;
+  top: 50%;
+  left: 50%;
+  padding: 10px;
+}
+
+.buttoRrow {
+display: flex;
+flex-direction: row;
+margin: 0 auto;
+}

@@ -1,0 +1,17 @@
+.pageButton {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgb(250, 162, 48);
+    display: inline;
+    margin: 10px;
+}
+
+.currentPage {
+    background-color: rgb(255, 154, 3);
+   
+}
+
+
+.pageButton.active {
+    background-color: rgb(253, 190, 95);
+}
