@@ -70,7 +70,7 @@ function SheepList() {
     nextPage,
     previousPage,
     goCurrentPage,
-  } = usePagination(filterName, 6); //vietoj getData
+  } = usePagination(filterName, 3); //vietoj getData
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -112,27 +112,27 @@ function SheepList() {
       <div>
         <ThemeProvider theme={themeGreen}>
           <div>
-            <h2>Avys</h2>
+          <h2>Avys</h2>
 
-            <Link to={`/addsheep`}>
-              {" "}
-              <ButtonLink text="Įvesti naują avį" unique_id={"addsheep"} />{" "}
-            </Link>
+<Link to={`/addsheep`}>
+  {" "}
+  <ButtonLink text="Įvesti naują avį" unique_id={"addsheep"} />{" "}
+</Link>
 
-            <Search changeFn={searchChange} />
+<Search changeFn={searchChange} />
             <Box
               sx={{
                 display: "flex",
                 flexWrap: "wrap",
-                justifyContent: "center",
                 "& > :not(style)": {
                   m: 1,
                   width: 128,
                   height: 220,
-                  bgcolor: themeGreen.palette.primary.dark,
+                  bgcolor: themeGreen.palette.primary.main,
                 },
               }}
             >
+              
               {pageData.map((item) => (
                 <Card
                   key={item.number + "sheepDiv"}
@@ -196,7 +196,69 @@ function SheepList() {
                   height: "100vh",
                 }}
               > */}
+            <h2>Avys</h2>
 
+            <Link to={`/addsheep`}>
+              {" "}
+              <ButtonLink text="Įvesti naują avį" unique_id={"addsheep"} />{" "}
+            </Link>
+
+            <Search changeFn={searchChange} />
+
+            <div className="mainCardDiv">
+              {/* <Stack direction="row" spacing={2}> */}
+              {pageData.map((item) => (
+                <Card
+                  key={item.number + "sheepDiv"}
+                  sx={{ minWidth: 275, margin: 2 }}
+                >
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      {item.number}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {new Date(item.birth_date).toISOString().split("T")[0]}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {item.breed}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {item.gender}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Stack direction="row" spacing={2}>
+                      <Button
+                        key={item.id + "del"}
+                        variant="contained"
+                        style={{ backgroundColor: "rgb(249, 131, 21)" }}
+                        onClick={() => {
+                          setshowClickBox(true);
+                          setDeleteNumber(item.number);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                      <Link to={`sheep/${item.number}`}>
+                        {" "}
+                        <Button
+                          key={item.id + "view"}
+                          variant="contained"
+                          style={{
+                            backgroundColor: themeGreen.palette.primary.main,
+                          }}
+                        >
+                          APIE
+                        </Button>
+                      </Link>
+                    </Stack>
+                  </CardActions>
+                </Card>
+              ))}
+
+              {/* </Stack> */}
+            </div>
+           
             <Pagination
               pageNumber={maxPages}
               currentPage={newCurrentPage}

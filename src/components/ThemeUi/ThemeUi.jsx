@@ -2,6 +2,13 @@ import { createTheme } from "@mui/material/styles";
 
 const themeGreen = createTheme({
     palette: {
+      background: {
+        default: "#c1e29b",
+        backgroundColor : 'black',
+       // backgroundImage: 'url(/bg.jpg)',
+        backgroundPosition: 'center',
+        height:'100%'
+      },
       primary: {
         superlight: "#c1e29b",
         light: "#a2cf6e",

@@ -9,30 +9,37 @@ import {
   // useParams,
   //  Link,
 } from "react-router-dom";
-import { ThemeProvider } from "../Theme/Provider";
+import { ThemeProvider } from "@mui/material/styles";
 import { ThemeContext } from "../Theme/Provider";
 import Head from "../Head/Head";
 import SheepList from "../SheepList/SheepList.jsx";
 import { Box, Container } from "@mui/material";
 import themeGreen from "../ThemeUi/ThemeUi.jsx";
+import DrawerAppBar from "../muiComponents/DrawerAppBar";
 //import Link from "@mui/material/Link";
 
 const routes_komponentas = createBrowserRouter([
   {
     path: "/",
     element: (
+      
       <div>
-        <Head />
+        <ThemeProvider theme={themeGreen}>
+        <DrawerAppBar />
         <SheepList />
+        </ThemeProvider>
       </div>
+      
     ),
   },
   {
     path: "/meds",
     element: (
       <div>
-        <Head />
+         <ThemeProvider theme={themeGreen}>
+        <DrawerAppBar />
         <h3>Vaistai</h3>
+        </ThemeProvider>
         {/* <Medications /> */}
       </div>
     ),
@@ -41,8 +48,10 @@ const routes_komponentas = createBrowserRouter([
     path: "/food",
     element: (
       <div>
-        <Head />
+        <ThemeProvider theme={themeGreen}>
+        <DrawerAppBar />
         <h3>Pasarai</h3>
+        </ThemeProvider>
         {/* <Food /> */}
       </div>
     ),
@@ -52,9 +61,12 @@ const routes_komponentas = createBrowserRouter([
     path: "sheep/:number",
     element: (
       <div>
-        <Head />
+        <ThemeProvider theme={themeGreen}>
+        <DrawerAppBar />
+      
         {/* <OneSheep /> */}
         <h1>Viena avis</h1>
+        </ThemeProvider>
       </div>
     ),
   },
