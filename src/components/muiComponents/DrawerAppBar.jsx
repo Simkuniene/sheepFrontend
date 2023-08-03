@@ -78,7 +78,7 @@ function DrawerAppBar(props) {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-             <Link href={item.path} underline="none" color="#fff" margin="10px">
+             <Link href={item.path} key={item.name+"nav"} underline="none" color="#fff" margin="10px">
               {item.name}
             </Link>
               //  <LinkComp key={item.name+"nav"} path={item.path} name={item.name} /> 

@@ -1,14 +1,14 @@
 import { useEffect, useReducer, useState } from "react";
 //import Button from "../Button/Button";
 import ButtonLink from "../Button/ButtonLink.jsx";
-import "./SheepList.css";
+//import "./SheepList.css";
 import { Link } from "react-router-dom";
-import { useFech } from "../../customHooks/useFech";
-import ClickBox from "../ClickBox/ClickBox";
-import Pagination from "../Pagination/Pagination";
-import usePagination from "../../customHooks/usePagination";
-import Search from "../Search/Search";
-import useSearch from "../../customHooks/useSearch";
+import { useFech } from "../../customHooks/useFech.js";
+import ClickBox from "../ClickBox/ClickBox.jsx";
+import Pagination from "../Pagination/Pagination.jsx";
+import usePagination from "../../customHooks/usePagination.js";
+import Search from "../Search/Search.jsx";
+import useSearch from "../../customHooks/useSearch.js";
 
 import * as React from "react";
 import Box from "@mui/material/Box";
@@ -20,7 +20,7 @@ import Box from "@mui/material/Box";
 //import { Margin } from "@mui/icons-material";
 //import Stack from "@mui/material/Stack";
 import { ThemeProvider } from "@mui/material/styles";
-import themeGreen from "../ThemeUi/ThemeUi";
+import themeGreen from "../ThemeUi/ThemeUi.jsx";
 import {
   Container,
   Button,
@@ -31,7 +31,6 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
-import ButtonLinkMui from "../Button/ButtonLinkMui.jsx";
 //import ButtonAppBar from "../muiComponents/ButtonAppBar.jsx";
 //import DrawerAppBar from "../muiComponents/DrawerAppBar.jsx";
 //import SimplePaper from "../muiComponents/SimplePaper.jsx";
@@ -47,17 +46,17 @@ import ButtonLinkMui from "../Button/ButtonLinkMui.jsx";
 //   </Box>
 // );
 
-function SheepList() {
-  const url = "http://localhost:3000/sheep";
+function MedsList() {
+  const url = "http://localhost:3000/meds";
   const { getData, getError, isLoading, myFetch } = useFech();
   // const [showClickBox, setshowClickBox] = useState(false);
-  //const [deleteNumber, setDeleteNumber] = useState(false);
+  // const [deleteNumber, setDeleteNumber] = useState(false);
 
   useEffect(() => {
     myFetch(url);
   }, []);
 
-  const { searchChange, filterName } = useSearch(getData);
+  //const { searchChange, filterName } = useSearch(getData);
 
   // console.log("filterName from useSearch");
   // console.log(filterName);
@@ -71,39 +70,11 @@ function SheepList() {
     nextPage,
     previousPage,
     goCurrentPage,
-  } = usePagination(filterName, 6); //vietoj getData
+  } = usePagination(getData, 6); //vietoj filterName
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
-
-  // const clickDelete = () => {
-  //   console.log(deleteNumber + "sheepId");
-  //   const confirm = window.confirm("Ar tikrai norite istrinti");
-
-  //   if (confirm) {
-  //     console.log("deletas sukurtas");
-
-  //     fetch("http://localhost:3000/deleteSheep/" + deleteNumber, {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       //.then((data) => setMyData(data))
-  //       .then(() => {
-  //         myFetch(url);
-  //         alert("Gyvunas istrintas");
-  //         setshowClickBox(false);
-  //       })
-
-  //       //window.location.reload()
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //   }
-  // };
 
   if (getError != null) {
     console.log(getError);
@@ -113,23 +84,35 @@ function SheepList() {
       <div>
         <ThemeProvider theme={themeGreen}>
           <div>
-            <h2>Avys</h2>
+            <h2>Vaistai</h2>
             <Stack direction="row" spacing={2} justifyContent="end">
-              <Link to={`/deletesheep`}>
-                <ButtonLinkMui
-                  text="Ištrinti įrašus apie avį"
-                  uniqueKey="buttonDeleteSheep"
-                />
+              <Link to={`/deleteMeds`}>
+                <Button
+                  key={"buttonDeleteSheep"}
+                  variant="contained"
+                  style={{
+                    backgroundColor: themeGreen.palette.primary.dark,
+                    marginRight: "10px",
+                  }}
+                >
+                  Ištrinti vaistą
+                </Button>
               </Link>
-              <Link to={`/addsheep`}>
-                <ButtonLinkMui
-                  text="Aprašyti naują avį"
-                  uniqueKey="buttonAddSheep"
-                />
+              <Link to={`/addMed`}>
+                <Button
+                  key={"buttonAddSheep"}
+                  variant="contained"
+                  style={{
+                    backgroundColor: themeGreen.palette.primary.dark,
+                    marginRight: "10px",
+                  }}
+                >
+                  Aprašyti naują vaistą
+                </Button>
               </Link>
             </Stack>
 
-            <Search changeFn={searchChange} />
+            
             <Box
               sx={{
                 display: "flex",
@@ -138,55 +121,44 @@ function SheepList() {
                 "& > :not(style)": {
                   m: 1,
                   width: 128,
-                  height: 220,
+                  height: 150,
                   bgcolor: themeGreen.palette.primary.middle,
                 },
               }}
             >
-              {pageData.map((item) => (
+              {pageData.map((item, i) => (
                 <Card
-                  key={item.number + "sheepDiv"}
+                  key={item.name+ i + "medDiv"}
                   sx={{ minWidth: 250, margin: 2 }}
                 >
                   <CardContent>
                     <Typography variant="h5" component="div">
-                      {item.number}
+                      {item.name}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      {new Date(item.birth_date).toISOString().split("T")[0]}
+                      {item.description}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      {item.breed}
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      {item.gender} (
-                      {item.gender === "4"
-                        ? "Ėriavedė"
-                        : item.gender === "2"
-                        ? "Avis"
-                        : "Avinas"}
-                      )
+                      {item.dosage}
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <Stack direction="row" spacing={2}>
-                      <Link to={`sheep/${item.number}`}>
-                        {" "}
-                        <Button
-                          key={item.id + "view"}
-                          variant="contained"
-                          style={{
-                            backgroundColor: themeGreen.palette.primary.main,
-                          }}
-                        >
-                          APIE
-                        </Button>
-                      </Link>
-                    </Stack>
-                  </CardActions>
                 </Card>
               ))}
+
+              {/* <Paper elevation={0} />
+
+              <Paper />
+              <Paper elevation={3} /> */}
             </Box>
+
+            {/* <Container maxWidth="xl">
+              <Box
+                className="minMainConteiner"
+                sx={{
+                  bgcolor: themeGreen.palette.primary.superlight,
+                  height: "100vh",
+                }}
+              > */}
 
             <Pagination
               pageNumber={maxPages}
@@ -197,6 +169,20 @@ function SheepList() {
               isPreviousActive={isPreviousActive}
               isNextActive={isNextActive}
             />
+            {/* <div>
+              {showClickBox && (
+                <ClickBox
+                  text="Ar tikrai norite istrinti?"
+                  funcClickOk={clickDelete}
+                  funcClickCancel={() => {
+                    setshowClickBox(false);
+                    setDeleteNumber();
+                  }}
+                />
+              )}
+            </div> */}
+            {/* </Box>
+            </Container> */}
           </div>
         </ThemeProvider>
       </div>
@@ -204,4 +190,4 @@ function SheepList() {
   }
 }
 
-export default SheepList;
+export default MedsList;

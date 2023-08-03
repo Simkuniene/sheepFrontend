@@ -1,0 +1,14 @@
+.main {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.errorDiv {
+    height: 15px;
+    color: red;
+    text-align: left;
+   }
+
+.inputClass {
+    left: 100px;
+}

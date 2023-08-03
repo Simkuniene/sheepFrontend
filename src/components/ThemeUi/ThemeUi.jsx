@@ -12,6 +12,7 @@ const themeGreen = createTheme({
       primary: {
         superlight: "#c1e29b",
         light: "#a2cf6e",
+        middle: "#94b66c",
         main: "#8bc34a",
         dark: "#618833",
         darkText: '#3d5d17',

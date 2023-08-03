@@ -1,7 +1,8 @@
 import {useReducer } from "react";
 //import { useEffect, useState } from "react";
 
-export function useFormValidate(formValue, validateFn, submitFn, errorsFn) {
+//export function useFormValidate(formValue, validateFn, submitFn, errorsFn) {
+  export function useFormValidate(formValue, validateFn, submitFn) {
   function reducerFn(previousState, action) {
     switch (action.type) {
       case "newFormValues": {
@@ -99,7 +100,7 @@ export function useFormValidate(formValue, validateFn, submitFn, errorsFn) {
         errors: errorsValidate,
       });
 
-      errorsFn(errorsValidate);
+     // errorsFn(errorsValidate);
     } else {
       submitFn(state.fValues);
     }
@@ -131,7 +132,7 @@ export function useFormValidate(formValue, validateFn, submitFn, errorsFn) {
   console.log(state.errors);
 
   return {
-    formValues: state.fValues,
+    //formValues: state.fValues,
     errors: state.errors,
     handleChange,
     handleSubmit,

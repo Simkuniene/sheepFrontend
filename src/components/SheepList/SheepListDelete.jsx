@@ -31,7 +31,7 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
-import ButtonLinkMui from "../Button/ButtonLinkMui.jsx";
+import ResponsiveDialog from "../muiComponents/ResponsiveDialog.jsx";
 //import ButtonAppBar from "../muiComponents/ButtonAppBar.jsx";
 //import DrawerAppBar from "../muiComponents/DrawerAppBar.jsx";
 //import SimplePaper from "../muiComponents/SimplePaper.jsx";
@@ -47,11 +47,11 @@ import ButtonLinkMui from "../Button/ButtonLinkMui.jsx";
 //   </Box>
 // );
 
-function SheepList() {
+function SheepListDelete() {
   const url = "http://localhost:3000/sheep";
   const { getData, getError, isLoading, myFetch } = useFech();
-  // const [showClickBox, setshowClickBox] = useState(false);
-  //const [deleteNumber, setDeleteNumber] = useState(false);
+  //const [showClickBox, setshowClickBox] = useState(false);
+  // const [deleteNumber, setDeleteNumber] = useState("");
 
   useEffect(() => {
     myFetch(url);
@@ -77,33 +77,34 @@ function SheepList() {
     return <p>Loading...</p>;
   }
 
-  // const clickDelete = () => {
-  //   console.log(deleteNumber + "sheepId");
-  //   const confirm = window.confirm("Ar tikrai norite istrinti");
+  const clickDelete = (deleteNumber) => {
+    // console.log(deleteNumber + "sheepNumber");
 
-  //   if (confirm) {
-  //     console.log("deletas sukurtas");
+    // const confirm = window.confirm("Ar tikrai norite issssstrinti ");
+    // console.log("deleteNumber ", deleteNumber);
+    // if (confirm) {
+    console.log("deletas sukurtas ", deleteNumber);
 
-  //     fetch("http://localhost:3000/deleteSheep/" + deleteNumber, {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       //.then((data) => setMyData(data))
-  //       .then(() => {
-  //         myFetch(url);
-  //         alert("Gyvunas istrintas");
-  //         setshowClickBox(false);
-  //       })
+    fetch("http://localhost:3000/deleteSheep/" + deleteNumber, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      //.then((data) => setMyData(data))
+      .then(() => {
+        myFetch(url);
+        // alert("Gyvunas istrintas");
+        //setshowClickBox(false);
+      })
 
-  //       //window.location.reload()
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //   }
-  // };
+      //window.location.reload()
+      .catch((err) => {
+        console.error(err);
+      });
+    // }
+  };
 
   if (getError != null) {
     console.log(getError);
@@ -113,22 +114,6 @@ function SheepList() {
       <div>
         <ThemeProvider theme={themeGreen}>
           <div>
-            <h2>Avys</h2>
-            <Stack direction="row" spacing={2} justifyContent="end">
-              <Link to={`/deletesheep`}>
-                <ButtonLinkMui
-                  text="Ištrinti įrašus apie avį"
-                  uniqueKey="buttonDeleteSheep"
-                />
-              </Link>
-              <Link to={`/addsheep`}>
-                <ButtonLinkMui
-                  text="Aprašyti naują avį"
-                  uniqueKey="buttonAddSheep"
-                />
-              </Link>
-            </Stack>
-
             <Search changeFn={searchChange} />
             <Box
               sx={{
@@ -139,54 +124,70 @@ function SheepList() {
                   m: 1,
                   width: 128,
                   height: 220,
-                  bgcolor: themeGreen.palette.primary.middle,
+                  bgcolor: themeGreen.palette.primary.dark,
                 },
               }}
             >
               {pageData.map((item) => (
                 <Card
-                  key={item.number + "sheepDiv"}
+                  key={item.number + "sheepDivDel"}
                   sx={{ minWidth: 250, margin: 2 }}
                 >
                   <CardContent>
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h6" component="div">
                       {item.number}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                       {new Date(item.birth_date).toISOString().split("T")[0]}
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    <Typography
+                      sx={{ mb: 1.5 }}
+                      color="text.secondary"
+                      marginBottom="5px"
+                    >
                       {item.breed}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      {item.gender} (
-                      {item.gender === "4"
-                        ? "Ėriavedė"
-                        : item.gender === "2"
-                        ? "Avis"
-                        : "Avinas"}
-                      )
+                      {item.gender} ({item.gender==="4" ? "Ėriavedė" : (item.gender==="2" ? "Avis" : "Avinas") })
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Stack direction="row" spacing={2}>
-                      <Link to={`sheep/${item.number}`}>
-                        {" "}
-                        <Button
-                          key={item.id + "view"}
-                          variant="contained"
-                          style={{
-                            backgroundColor: themeGreen.palette.primary.main,
-                          }}
-                        >
-                          APIE
-                        </Button>
-                      </Link>
-                    </Stack>
+                    <ResponsiveDialog
+                      keyProps={item.id + "del"}
+                      delItem={item.number}
+                      handleDelete={() => clickDelete(item.number)}
+                    />
+                    {/* <Button
+                        key={item.id + "del"}
+                        variant="contained"
+                        style={{ backgroundColor: "rgb(249, 131, 21)" }}
+                        onClick={() => {
+                         // setshowClickBox(true);
+                         // setDeleteNumber(item.number);
+                          clickDelete(item.number);
+
+                        }}
+                      >
+                        Ištrinti
+                      </Button> */}
                   </CardActions>
                 </Card>
               ))}
+
+              {/* <Paper elevation={0} />
+
+              <Paper />
+              <Paper elevation={3} /> */}
             </Box>
+
+            {/* <Container maxWidth="xl">
+              <Box
+                className="minMainConteiner"
+                sx={{
+                  bgcolor: themeGreen.palette.primary.superlight,
+                  height: "100vh",
+                }}
+              > */}
 
             <Pagination
               pageNumber={maxPages}
@@ -197,6 +198,20 @@ function SheepList() {
               isPreviousActive={isPreviousActive}
               isNextActive={isNextActive}
             />
+            {/* <div>
+              {showClickBox && (
+                <ClickBox
+                  text="Ar tikrai norite istrinti?"
+                  funcClickOk={clickDelete}
+                  funcClickCancel={() => {
+                    setshowClickBox(false);
+                    setDeleteNumber();
+                  }}
+                />
+              )}
+            </div> */}
+            {/* </Box>
+            </Container> */}
           </div>
         </ThemeProvider>
       </div>
@@ -204,4 +219,4 @@ function SheepList() {
   }
 }
 
-export default SheepList;
+export default SheepListDelete;

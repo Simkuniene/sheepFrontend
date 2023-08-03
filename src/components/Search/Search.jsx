@@ -13,13 +13,14 @@ function Search({ changeFn }) {
           width: "25ch",
         },
       }}
-      noValidate0
+      //noValidate0
+     
       autoComplete="off"
     >
       <TextField
         id="outlined-basic"
         name="search"
-        label="Search"
+        label="Paieška"
         variant="outlined"
         onChange={changeFn}
       />
