@@ -24,7 +24,7 @@ export default function ResponsiveDialog({ keyProps, delItem, handleDelete }) {
   return (
     <div>
       <Button key={keyProps} variant="contained" onClick={handleClickOpen}>
-        Isrinti
+        Ištrinti
       </Button>
       <Dialog
         fullScreen={fullScreen}

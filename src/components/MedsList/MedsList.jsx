@@ -141,6 +141,9 @@ function MedsList() {
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                       {item.dosage}
                     </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {item.withdrawal}
+                    </Typography>
                   </CardContent>
                 </Card>
               ))}

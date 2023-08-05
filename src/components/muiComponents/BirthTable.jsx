@@ -40,14 +40,15 @@ if (isLoading) {
   } else {
     return (
         <TableContainer component={Paper}>
-            {getData.number}
+           Gimdymai
         <Table sx={{ minWidth: 150, bgcolor: themeGreen.palette.primary.middle,}} aria-label="simple table">
-          {/* <TableHead>
+          <TableHead>
             <TableRow>
-              <TableCell>aaa</TableCell>
-              <TableCell align="right">Reiksme</TableCell>
+              <TableCell>Gimdymo data</TableCell>
+              <TableCell align="center">Ėriukų skaičius</TableCell>
+              <TableCell align="right">Pastabos</TableCell>
             </TableRow>
-          </TableHead> */}
+          </TableHead>
           <TableBody>
           {getData.map((row, index) => (
             <TableRow
@@ -58,7 +59,7 @@ if (isLoading) {
                 {new Date(row.date).toISOString().split("T")[0]
 }
               </TableCell>
-              <TableCell align="right">{row.lambs_number}</TableCell>
+              <TableCell align="center">{row.lambs_number}</TableCell>
               <TableCell align="right">{row.notes}</TableCell>
             </TableRow>
           ))}

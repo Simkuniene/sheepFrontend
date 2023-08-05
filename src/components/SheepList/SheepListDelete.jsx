@@ -148,46 +148,29 @@ function SheepListDelete() {
                       {item.breed}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      {item.gender} ({item.gender==="4" ? "Ėriavedė" : (item.gender==="2" ? "Avis" : "Avinas") })
+                      {item.gender} (
+                      {item.gender === "4"
+                        ? "Ėriavedė"
+                        : item.gender === "2"
+                        ? "Avis"
+                        : "Avinas"}
+                      )
                     </Typography>
                   </CardContent>
                   <CardActions>
+                    <Stack direction="row" spacing={2}>
+                                       
+                  
                     <ResponsiveDialog
                       keyProps={item.id + "del"}
                       delItem={item.number}
                       handleDelete={() => clickDelete(item.number)}
                     />
-                    {/* <Button
-                        key={item.id + "del"}
-                        variant="contained"
-                        style={{ backgroundColor: "rgb(249, 131, 21)" }}
-                        onClick={() => {
-                         // setshowClickBox(true);
-                         // setDeleteNumber(item.number);
-                          clickDelete(item.number);
-
-                        }}
-                      >
-                        Ištrinti
-                      </Button> */}
+                    </Stack>
                   </CardActions>
                 </Card>
               ))}
-
-              {/* <Paper elevation={0} />
-
-              <Paper />
-              <Paper elevation={3} /> */}
             </Box>
-
-            {/* <Container maxWidth="xl">
-              <Box
-                className="minMainConteiner"
-                sx={{
-                  bgcolor: themeGreen.palette.primary.superlight,
-                  height: "100vh",
-                }}
-              > */}
 
             <Pagination
               pageNumber={maxPages}

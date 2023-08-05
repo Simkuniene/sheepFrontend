@@ -24,9 +24,10 @@ export default function SheepTable({sheepData}) {
     createData("Užregistravimo data", new Date(sheepData[0].registration_date).toISOString().split("T")[0]),
   ];
 
-
+  
 
   return (
+ 
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 150, bgcolor: themeGreen.palette.primary.middle,}} aria-label="simple table">
         {/* <TableHead>
@@ -50,5 +51,6 @@ export default function SheepTable({sheepData}) {
         </TableBody>
       </Table>
     </TableContainer>
+
   );
 }

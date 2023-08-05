@@ -7,7 +7,7 @@ import Input from "@mui/material/Input";
 //import { useEffect, useState } from "react";
 
 /////////////////////////////////////////////////////////////////////////
-function AddMedication() {
+function AddTreatment() {
   // const { state, isValid } = useFormValidate();
 
   // const [medData, setMyData] = useState({
@@ -45,9 +45,9 @@ function AddMedication() {
   //   alert(`Klaidos: ${errors.name}  ${errors.description}`);
   // }
 
-  // function formErrors() {
-  //   alert(`Įvesdami duomenis padarėte klaidų`);
-  // }
+  //   function formErrors() {
+  //     alert(`Įvesdami duomenis padarėte klaidų`);
+  //   }
 
   ///////////
 
@@ -83,11 +83,6 @@ function AddMedication() {
     // formErrors
   );
 
-  // console.log("formValues"); //undefined
-  // console.log(formValues); //undefined
-  // console.log("errors222"); //undefined
-  // console.log(errors); //undefined
-
   return (
     <div className="App">
       <Box
@@ -101,81 +96,62 @@ function AddMedication() {
       >
         <Input
           type="text"
-          id="name"
-          name="name"
-          placeholder="Pavadinimas"
+          id="medicine"
+          name="medicine"
+          placeholder="Vaistas"
           onChange={handleChange}
         />
         <br />
-        {errors && <span className="errorDiv">{errors.name}</span>}
+        {/* {errors && <span className="errorDiv">{errors.medicine}</span>} */}
+        <br />
+        <Input
+          type="date"
+          id="start"
+          name="start"
+          placeholder="Pradėta"
+          onChange={handleChange}
+        />
+        <br />
+        <Input
+          type="date"
+          id="finish"
+          name="finish"
+          placeholder="Baigta"
+          onChange={handleChange}
+        />
+        <br />
+        <br />
+
+        {/* {errors && <span className="errorDiv">{errors.finish}</span>} */}
         <br />
         <Input
           type="text"
           id="dosage"
           name="dosage"
-          placeholder="Dozavimas"
+          placeholder="Dozė"
           onChange={handleChange}
         />
         <br />
         <Input
-          type="text"
+          type="date"
           id="withdrawal"
           name="withdrawal"
           placeholder="Išlauka"
           onChange={handleChange}
         />
-
-        <br />
-        {errors && <span className="errorDiv">{errors.dosage}</span>}
         <br />
         <Input
           type="text"
-          id="description"
-          name="description"
-          placeholder="Aprašymas"
+          id="notes"
+          name="notes"
+          placeholder="Pastabos"
           onChange={handleChange}
         />
-        <br />
-        {errors && <span className="errorDiv">{errors.description}</span>}
-        <br />
 
         <ButtonSub text="Pridėti medikamentą" />
       </Box>
     </div>
-    // <div className="inputClass">
-    //   <form onSubmit={handleSubmit}>
-    //     {/* <form onSubmit={useInputValid()}>  */}
-    //     {/*vietoj addMed kviesim useInputValid */}
-    //     <input
-    //       className="inputClass"
-    //       type="text"
-    //       id="name"
-    //       name="name"
-    //       placeholder="Name"
-    //       // value={medData.name}
-    //       onChange={handleChange}
-    //     />
-    //     <br />
-    //     {errors && <span className="errorDiv">{errors.name}</span>}
-    //     <br />
-    //     <input
-    //       className="inputClass"
-    //       type="text"
-    //       id="description"
-    //       name="description"
-    //       placeholder="Description"
-    //       // value={medData.description}
-    //       onChange={handleChange}
-    //       //required
-    //     />
-    //     <br />
-    //     {errors && <span className="errorDiv">{errors.description}</span>}
-    //     <br />
-    //     <ButtonSub />
-    //   </form>
-    // </div>
-    // </div>
   );
 }
 
-export default AddMedication;
+export default AddTreatment;

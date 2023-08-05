@@ -32,6 +32,8 @@ import {
   Paper,
 } from "@mui/material";
 import ButtonLinkMui from "../Button/ButtonLinkMui.jsx";
+import HowBirthTable from "../muiComponents/HowBirthTable.jsx";
+import AboutBirth from "../muiComponents/AboutBirth.jsx";
 //import ButtonAppBar from "../muiComponents/ButtonAppBar.jsx";
 //import DrawerAppBar from "../muiComponents/DrawerAppBar.jsx";
 //import SimplePaper from "../muiComponents/SimplePaper.jsx";
@@ -77,34 +79,7 @@ function SheepList() {
     return <p>Loading...</p>;
   }
 
-  // const clickDelete = () => {
-  //   console.log(deleteNumber + "sheepId");
-  //   const confirm = window.confirm("Ar tikrai norite istrinti");
-
-  //   if (confirm) {
-  //     console.log("deletas sukurtas");
-
-  //     fetch("http://localhost:3000/deleteSheep/" + deleteNumber, {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       //.then((data) => setMyData(data))
-  //       .then(() => {
-  //         myFetch(url);
-  //         alert("Gyvunas istrintas");
-  //         setshowClickBox(false);
-  //       })
-
-  //       //window.location.reload()
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //   }
-  // };
-
+ 
   if (getError != null) {
     console.log(getError);
     return <p>Klaida: {getError.error}</p>;
@@ -117,7 +92,7 @@ function SheepList() {
             <Stack direction="row" spacing={2} justifyContent="end">
               <Link to={`/deletesheep`}>
                 <ButtonLinkMui
-                  text="Ištrinti įrašus apie avį"
+                  text="Panaikinti įrašą apie avis"
                   uniqueKey="buttonDeleteSheep"
                 />
               </Link>
@@ -198,6 +173,9 @@ function SheepList() {
               isNextActive={isNextActive}
             />
           </div>
+
+          <AboutBirth />
+
         </ThemeProvider>
       </div>
     );

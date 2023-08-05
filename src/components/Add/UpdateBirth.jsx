@@ -6,7 +6,7 @@ import "./add.css";
 import { useState } from "react";
 
 
-function AddBirth() {
+function UpdateBirth() {
   const [sheepData, setMyData] = useState({
     number: "",
     gender: 0,
@@ -38,7 +38,7 @@ function AddBirth() {
     event.preventDefault();
     console.log(sheepData);
 
-    fetch("http://localhost:3000/addBirth/", {
+    fetch("http://localhost:3000/updateBirth/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ function AddBirth() {
       body: JSON.stringify(sheepData),
     })
       .then((res) => res.json())
-      .then((data) => alert("Gimdymas įvestas"))
+      .then((data) => alert("Gimdymas redaguotas"))
 
       .catch((err) => {
         console.error(err);
@@ -120,4 +120,4 @@ function AddBirth() {
   );
 }
 
-export default AddBirth;
+export default UpdateBirth;

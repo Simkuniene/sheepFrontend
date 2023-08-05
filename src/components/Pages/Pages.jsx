@@ -22,7 +22,9 @@ import AddMedication from "../Add/AddMedication";
 import MedsList from "../MedsList/MedsList";
 import MedsListDelete from "../MedsList/MedsListDelete";
 import AddBirth from "../Add/AddBirth";
+import AddTreatment from "../Add/AddTreatment";
 import OneSheep from "../OneSheep/OneSheep";
+import UpdateSheep from "../Add/UpdateSheep";
 
 //import Link from "@mui/material/Link";
 
@@ -63,7 +65,7 @@ const routes_komponentas = createBrowserRouter([
   },
 
   {
-    path: "sheep/:number",
+    path: "/sheep/:number",
     element: (
       <div>
         <ThemeProvider theme={themeGreen}>
@@ -86,6 +88,19 @@ const routes_komponentas = createBrowserRouter([
       </div>
     ),
   },
+ 
+  {
+    //path: "sheepupdate/:number",
+    path: "/sheepupdate/:number",
+    element: (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <UpdateSheep />
+        </ThemeProvider>
+      </div>
+    ),
+  },
 
   {
     path: "/addbirth",
@@ -93,8 +108,19 @@ const routes_komponentas = createBrowserRouter([
       <div>
         <ThemeProvider theme={themeGreen}>
           <DrawerAppBar />
-          <h1>Prideti avi</h1>
-          <AddBirth />
+                 <AddBirth />
+        </ThemeProvider>
+      </div>
+    ),
+  },
+
+  {
+    path: "/addtreatment",
+    element: (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+                 <AddTreatment />
         </ThemeProvider>
       </div>
     ),

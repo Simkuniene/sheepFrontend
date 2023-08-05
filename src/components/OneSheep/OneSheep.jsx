@@ -1,73 +1,48 @@
-import React from "react";
+import React, { createContext } from "react";
 import "./OneSheep.css";
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState, useReducer, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../Button/Button";
 import AddLog from "../Add/AddLog.jsx";
-import { perceptionsData } from "../../perceptions.js";
 import { useFech } from "../../customHooks/useFech";
 import SheepTable from "../muiComponents/SheepTable";
 import BirthTable from "../muiComponents/BirthTable";
+import { Stack } from "@mui/material";
+import ButtonLinkMui from "../Button/ButtonLinkMui";
+import TreatmentTable from "../muiComponents/TreatmentTable";
 
-//import ButtonLink from "../Button/ButtonLink.jsx";
+
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import themeGreen from "../ThemeUi/ThemeUi";
+import AboutBirth from "../muiComponents/AboutBirth";
+import AboutTreatment from "../muiComponents/AboutTreatment";
+import DrawerAppBar from "../muiComponents/DrawerAppBar";
+
 
 function OneSheep() {
-  //const [count, setCount] = useState(0);
-
-  // const [onePetData, setOnePetData] = useState([
-  //   {
-  //     id: 0,
-  //     pet_id: 0,
-  //     description: "0",
-  //     status: "0",
-  //     name: "0",
-  //     dob: 0,
-  //     client_email: "0",
-  //     archived: 0,
-  //   },
-  // ]);
-  //const [loadingData, setLoading] = useState(true);
-
-  const [state, dispach] = useReducer(myReducer, {
-    birthClicked: false,
-    prescripClicked: false,
-  });
-
-  function myReducer(previousState, action) {
-    switch (action.type) {
-      case "birth": {
-        return {
-          ...previousState,
-          birthClicked: !previousState.birthClicked,
-        };
-      }
-
-      case "prescriptions": {
-        return {
-          ...previousState,
-          prescripClicked: !previousState.prescripClicked,
-        };
-      }
-
-      default: {
-        return previousState;
-      }
-    }
-  }
-
-  // const [logClicked, setClicked] = useState(false);
-  // const [prescripClicked, setPresClicked] = useState(false);
-  const [formActive, setFormActive] = useState(false);
-
+  
   const params = useParams();
-  // console.log(params.id);
+  
   const url = "http://localhost:3000/sheep/" + params.number;
 
   const { getData, getError, isLoading, myFetch } = useFech();
-  // const { getBirthData, getBirthError, isBirthLoading, myFetchB } = useFech();
-  console.log("getData");
-  console.log(getData);
 
+  // console.log("getData");
+  // console.log(getData);
+  localStorage.setItem('sheepData', JSON.stringify(getData[0]));
+
+
+  // function createData(name, value) {
+  //   return { name, value };
+  // }
+  
+ 
   useEffect(() => {
     myFetch(url);
   }, [params.number]);
@@ -82,8 +57,36 @@ function OneSheep() {
     return <p>Klaida: {getError.error}</p>;
   } else {
     return (
+      
       <div>
-        <h2>
+       
+
+
+
+
+       
+        <Stack direction="row" spacing={2} justifyContent="end">
+          <Link to={`/addbirth`}>
+            <ButtonLinkMui
+              text="Pridėti gimdymus"
+              uniqueKey="buttonBirthOneSheep"
+            />
+          </Link>
+          <Link to={`/addtreatment`}>
+            <ButtonLinkMui
+              text="Aprašyti naudotus vaistus"
+              uniqueKey="buttonMedsOneSheep"
+            />
+          </Link>
+          <Link to={`/sheepupdate/${params.number}`}>
+            <ButtonLinkMui 
+              text="Atnaujinti duomenis"
+              uniqueKey={params.number + "update"}
+            />
+          </Link>
+        </Stack>
+        <DrawerAppBar />
+        <h2 style={{ margin: '10px' }}>
           {" "}
           <p>
             {getData[0].number} (
@@ -100,89 +103,30 @@ function OneSheep() {
           </p>
         </h2>
 
-        <div style={{ margin: "10%" }}>
-          {" "}
-          <SheepTable sheepData={getData} />{" "}
-        </div>
-
-        <div className="flexDivSpace">
-          <div className="flexDivStart">
-            <p>Display: </p>
-            <Button
-              text={state.birthClicked ? "Gimdymai" : "Gimdymai V"}
-              unique_id={"birthsOne"}
-              clickEvent={
-                () => {
-                  dispach({
-                    type: "birth",
-                  });
-                }
-
-                //  setClicked(!birthClicked)
-              }
-            />
-            <Button
-              text={state.prescripClicked ? "PRESCRIPTIONS" : "PRESCRIPTIONS V"}
-              unique_id={"prescriptions"}
-              clickEvent={
-                () => {
-                  dispach({
-                    type: "prescriptions",
-                  });
-                }
-                // setPresClicked(!prescripClicked)
-              }
-            />
-          </div>
-          <div className="flexDivEnd">
-            {" "}
-            <Button
-              text="ADD PRESCRIPTION"
-              unique_id={"addprescription"}
-              // clickEvent={() => clickDelete(item.id)}
-            />
-            <Button
-              text="ADD birth"
-              unique_id={"addbirth"}
-              clickEvent={() => setFormActive(!formActive)}
-            />
-            {formActive ? (
-              <div className="addbirth">
-                <AddLog petID={params.number} />
+        <div style={{ margin: '0 20%' }}>
+        <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 150, marginBottom: '1px', bgcolor: themeGreen.palette.primary.middle,}} aria-label="simple table">
+        
+        <TableBody>
+              <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }} >
+             
+              <TableCell align="left">
+              <div>
+              <AboutBirth sheepNumber={params.number}/><br/>
+              <AboutTreatment sheepNumber={params.number}/>
               </div>
-            ) : (
-              <></>
-            )}
-          </div>
+               </TableCell>
+        
+            </TableRow>
+       </TableBody>
+      </Table>
+    </TableContainer>
+          <SheepTable sheepData={getData} />
+
+  
         </div>
 
-        <div
-          id="births"
-          className={` ${state.birthClicked ? "hideDiv" : "main"} `}
-        >
-          {/* <div id="births" className="main"> */}
-          {/*Cia reikia gauti duomenis is kitos lenteles /////////////////////////*/}
-          <div style={{ margin: "10%" }}>
-            {" "}
-            <BirthTable sheepNumber={params.number}/>{" "}
-          </div>
-          Reik sutvarkyti
-        </div>
-
-        {!state.prescripClicked ? (
-          <div id="perceptions" className="main">
-            {/* {perceptionsData.map((item, index) => (
-              <div className="petDiv">
-                <div key={item.name + index+"petDiv"}>{item.name}</div>
-                <div key={item.description + index+"petDiv"}>{item.description}</div>
-                <div key={item.comment + index+"petDiv"}>{item.comment}</div>
-              </div>
-            ))} */}
-            prescripClicked
-          </div>
-        ) : (
-          <></>
-        )}
+   
       </div>
     );
   }
