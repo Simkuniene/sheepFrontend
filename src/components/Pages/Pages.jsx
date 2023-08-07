@@ -1,29 +1,31 @@
 import "./Pages.css";
-//import LinkComp from "../LinkComp/LinkComp.jsx";
-//import Medications from "../Medications/Medications.jsx";
-////import AddMedication from "../AddPet/AddMedication.jsx";
-import { useContext } from "react";
 import {
   RouterProvider,
   createBrowserRouter,
-  // useParams,
-  //  Link,
 } from "react-router-dom";
-import { ThemeProvider } from "../Theme/Provider";
-import { ThemeContext } from "../Theme/Provider";
-import Head from "../Head/Head";
+import { ThemeProvider } from "@mui/material/styles";
 import SheepList from "../SheepList/SheepList.jsx";
-import { Box, Container } from "@mui/material";
+import SheepListDelete from "../SheepList/SheepListDelete.jsx";
 import themeGreen from "../ThemeUi/ThemeUi.jsx";
-//import Link from "@mui/material/Link";
+import DrawerAppBar from "../muiComponents/DrawerAppBar";
+import AddSheep from "../Add/AddSheep";
+import AddMedication from "../Add/AddMedication";
+import MedsList from "../MedsList/MedsList";
+import MedsListDelete from "../MedsList/MedsListDelete";
+import AddBirth from "../Add/AddBirth";
+import AddTreatment from "../Add/AddTreatment";
+import OneSheep from "../OneSheep/OneSheep";
+import UpdateSheep from "../Add/UpdateSheep";
 
-const routes_komponentas = createBrowserRouter([
+const routes_comp = createBrowserRouter([
   {
     path: "/",
     element: (
       <div>
-        <Head />
-        <SheepList />
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <SheepList />
+        </ThemeProvider>
       </div>
     ),
   },
@@ -31,9 +33,10 @@ const routes_komponentas = createBrowserRouter([
     path: "/meds",
     element: (
       <div>
-        <Head />
-        <h3>Vaistai</h3>
-        {/* <Medications /> */}
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <MedsList />
+        </ThemeProvider>
       </div>
     ),
   },
@@ -41,64 +44,125 @@ const routes_komponentas = createBrowserRouter([
     path: "/food",
     element: (
       <div>
-        <Head />
-        <h3>Pasarai</h3>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <h3>Čia bus pašarų normos</h3>
+        </ThemeProvider>
         {/* <Food /> */}
       </div>
     ),
   },
 
   {
-    path: "sheep/:number",
+    path: "/sheep/:number",
     element: (
       <div>
-        <Head />
-        {/* <OneSheep /> */}
-        <h1>Viena avis</h1>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <OneSheep />
+        </ThemeProvider>
       </div>
     ),
   },
 
-  // {
-  //   path: "/addsheep",
-  //   element: (
-  //     <div>
-  //       
-  //     </div>
-  //   ),
-  // },
-  // {
-  //   path: "/addMed",
-  //   element: (
-  //     <div>
-  //       
-  //      
-  //     </div>
-  //   ),
-  // },
+  {
+    path: "/addsheep",
+    element: (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <AddSheep />
+        </ThemeProvider>
+      </div>
+    ),
+  },
+
+  {
+    path: "/sheepupdate/:number",
+    element: (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <UpdateSheep />
+        </ThemeProvider>
+      </div>
+    ),
+  },
+
+  {
+    path: "/addbirth",
+    element: (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <AddBirth />
+        </ThemeProvider>
+      </div>
+    ),
+  },
+
+  {
+    path: "/addtreatment",
+    element: (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <AddTreatment />
+        </ThemeProvider>
+      </div>
+    ),
+  },
+  {
+    path: "/deletesheep",
+    element: (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <SheepListDelete />
+        </ThemeProvider>
+      </div>
+    ),
+  },
+  {
+    path: "/addMed",
+    element: (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <AddMedication />
+        </ThemeProvider>
+      </div>
+    ),
+  },
+  {
+    path: "/deleteMeds",
+    element: (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <DrawerAppBar />
+          <MedsListDelete />
+        </ThemeProvider>
+      </div>
+    ),
+  },
 
   //{
-    //   path: "/addFood",
-    //   element: (
-    //     <div>
-    //       
-    //      
-    //     </div>
-    //   ),
-    // },
-
+  //   path: "/addFood",
+  //   element: (
+  //     <div>
+  //
+  //
+  //     </div>
+  //   ),
+  // },
 ]);
 
 function Pages() {
   return (
     <div>
-   
-      <RouterProvider router={routes_komponentas}></RouterProvider>
-    
+      <RouterProvider router={routes_comp}></RouterProvider>
     </div>
   );
 }
 
 export default Pages;
-
-

@@ -1,0 +1,54 @@
+.bigText {
+  font-size: xx-large;
+}
+
+.flexDivStart {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.flexDivSpace {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flexDivEnd {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.hideDiv {
+  display: none;
+}
+
+.addLog {
+  position: fixed;
+  top: 20%;
+  left: 30%;
+  width: 500px;
+  height: 100px;
+  border: 1px solid grey;
+  background-color: rgb(247, 184, 100);
+}
+
+.pressButton {
+  background-color:  #71a03c;
+}
+
+.unpressButton {
+  background-color:  #8bc34a;
+}
+
+.fixDiv {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  /* height: 100px; */
+  border: 1px solid rgb(196, 244, 200);
+  background-color:  #ffffff;
+}

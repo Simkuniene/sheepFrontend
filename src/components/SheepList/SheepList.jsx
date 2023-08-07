@@ -1,12 +1,14 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+import { useEffect } from "react";
 import "./SheepList.css";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useFech } from "../../customHooks/useFech";
+import Pagination from "../Pagination/Pagination";
+import usePagination from "../../customHooks/usePagination";
+import Search from "../Search/Search";
+import useSearch from "../../customHooks/useSearch";
+import * as React from "react";
+import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
-//import Pages from "./components/Pages/Pages";
 import themeGreen from "../ThemeUi/ThemeUi";
 import {
   Button,
@@ -16,135 +18,131 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import ButtonLinkMui from "../Button/ButtonLinkMui.jsx";
+
+////////////////////
 
 function SheepList() {
-  const [loadingData, setLoading] = useState(true);
-  const [sheepData, setSheepData] = useState([]);
-
-  console.log(sheepData);
-
-  async function myfetch() {
-    setLoading(true);
-    try {
-      await fetch("http://localhost:3000/sheep")
-        .then((res) => res.json())
-        .then((data) => setSheepData(data));
-    } catch (error) {
-      console.log(error);
-      return;
-    }
-    setLoading(false);
-  }
+  const url = "http://localhost:3000/sheep";
+  const { getData, getError, isLoading, myFetch } = useFech();
 
   useEffect(() => {
-    myfetch();
+    myFetch(url);
   }, []);
 
-  if (loadingData) {
+  const { searchChange, filterName } = useSearch(getData);
+
+  const {
+    maxPages,
+    newCurrentPage,
+    pageData,
+    isPreviousActive,
+    isNextActive,
+    nextPage,
+    previousPage,
+    goCurrentPage,
+  } = usePagination(filterName, 6); //vietoj getData
+
+  if (isLoading) {
     return <p>Loading...</p>;
   }
 
-  // const clickDelete = (petId) => {
-  //   console.log(petId + "petId");
-  //   const confirm = window.confirm("Ar tikrai norite istrinti");
+  if (getError != null) {
+    return <p>Klaida: {getError.error}</p>;
+  } else {
+    return (
+      <div>
+        <ThemeProvider theme={themeGreen}>
+          <div>
+            <h2>Avys</h2>
+            <Stack direction="row" spacing={2} justifyContent="end">
+              <Link to={`/deletesheep`}>
+                <ButtonLinkMui
+                  text="Panaikinti įrašą apie avis"
+                  uniqueKey="buttonDeleteSheep"
+                />
+              </Link>
+              <Link to={`/addsheep`}>
+                <ButtonLinkMui
+                  text="Aprašyti naują avį"
+                  uniqueKey="buttonAddSheep"
+                />
+              </Link>
+            </Stack>
 
-  //   if (confirm) {
-  //     console.log("deletas sukurtas");
-
-  //     fetch("https://glittery-dull-snickerdoodle.glitch.me/v1/pets/" + petId, {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       //.then((data) => setMyData(data))
-  //       .then(() => {
-  //         myfetch();
-  //         alert("Gyvunas istrintas");
-  //       })
-
-  //       //window.location.reload()
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //   }
-  // };
-
-  return (
-    <div className="App">
-      <ThemeProvider theme={themeGreen}>
-        {/* <Link to={`/addpet`}>
-        {" "}
-        <ButtonLink text="ADD PET" unique_id={"addPet"} />{" "}
-      </Link> */}
-
-        <div className="main">
-          <Container maxWidth="xl">
+            <Search changeFn={searchChange} />
             <Box
-              className="minMainConteiner"
               sx={{
-                bgcolor: themeGreen.palette.primary.superlight,
-                height: "100vh",
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                "& > :not(style)": {
+                  m: 1,
+                  width: 128,
+                  height: 220,
+                  bgcolor: themeGreen.palette.primary.middle,
+                },
               }}
             >
-              <div className="mainCardDiv"
-              >
-                {sheepData.map((item) => (
-                  <Card
-                    key={item.number + "sheepDiv"}
-                    sx={{ minWidth: 275, margin: 2 }}
-                  >
-                    <CardContent>
-                      <Typography variant="h5" component="div">
-                        {item.number}
-                      </Typography>
-                      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        {new Date(item.birth_date).toISOString().split("T")[0]}
-                      </Typography>
-                      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        {item.breed}
-                      </Typography>
-                      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        {item.gender}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Stack direction="row" spacing={2}>
-                        {/* <Button
-                    key={item.id + "del"}
-                    variant="contained"
-                    style={{ backgroundColor: "rgb(249, 131, 21)" }}
-                    onClick={() => {
-                      setshowClickBox(true);
-                      setDeleteId(item.id);
-                    }}
-                  >
-                    Delete
-                  </Button> */}
-                        <Link to={`sheep/${item.number}`}>
-                          {" "}
-                          <Button
-                            key={item.id + "view"}
-                            variant="contained"
-                            style={{
-                              backgroundColor: themeGreen.palette.primary.main,
-                            }}
-                          >
-                            APIE
-                          </Button>
-                        </Link>
-                      </Stack>
-                    </CardActions>
-                  </Card>
-                ))}
-              </div>
+              {pageData.map((item) => (
+                <Card
+                  key={item.number + "sheepDiv"}
+                  sx={{ minWidth: 250, margin: 2 }}
+                >
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      {item.number}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {new Date(item.birth_date).toISOString().split("T")[0]}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {item.breed}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {item.gender} (
+                      {item.gender === "4"
+                        ? "Ėriavedė"
+                        : item.gender === "2"
+                        ? "Avis"
+                        : "Avinas"}
+                      )
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Stack direction="row" spacing={2}>
+                      <Link to={`sheep/${item.number}`}>
+                        {" "}
+                        <Button
+                          key={item.id + "view"}
+                          variant="contained"
+                          style={{
+                            backgroundColor: themeGreen.palette.primary.main,
+                          }}
+                        >
+                          APIE
+                        </Button>
+                      </Link>
+                    </Stack>
+                  </CardActions>
+                </Card>
+              ))}
             </Box>
-          </Container>
-        </div>
-      </ThemeProvider>
-    </div>
-  );
+
+            <Pagination
+              pageNumber={maxPages}
+              currentPage={newCurrentPage}
+              nextPageFn={nextPage}
+              previousPageFn={previousPage}
+              currentPageFn={goCurrentPage}
+              isPreviousActive={isPreviousActive}
+              isNextActive={isNextActive}
+            />
+          </div>
+        </ThemeProvider>
+      </div>
+    );
+  }
 }
 
 export default SheepList;

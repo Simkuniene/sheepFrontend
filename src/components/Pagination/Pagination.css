@@ -1,0 +1,17 @@
+.pageButton {
+    width: 20px;
+    height: 20px;
+    border: 1px solid 618833;
+    display: inline;
+    margin: 10px;
+}
+
+.currentPage {
+    background-color: #8bc34a;
+   
+}
+
+
+.pageButton.active {
+    background-color: #94b66c;
+}
