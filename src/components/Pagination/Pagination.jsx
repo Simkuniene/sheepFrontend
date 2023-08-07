@@ -10,8 +10,6 @@ function Pagination({
   isNextActive,
 }) {
 
- // console.log(currentPage + "page");
-
   const list = [];
 
   for (let i = 1; i <= pageNumber; i++) {

@@ -8,11 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import themeGreen from "../ThemeUi/ThemeUi";
-import { useEffect, useState, useReducer, useContext } from "react";
-
-//import { useEffect} from "react";
-//import { useParams } from "react-router-dom";
-
+import { useEffect, useReducer } from "react";
 import { useFech } from "../../customHooks/useFech";
 import Button from "../Button/Button";
 import BirthTable from "./BirthTable";
@@ -51,15 +47,11 @@ export default function AboutBirthTable({ sheepNumber }) {
     myFetch("http://localhost:3000/births/" + sheepNumber);
   }, []);
 
-  // console.log("lambs_number_full");
-  // console.log(getData);
-
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
   if (getError != null) {
-    console.log(getError);
     return <p>Klaida: {getError.error}</p>;
   } else {
     return (
@@ -67,28 +59,21 @@ export default function AboutBirthTable({ sheepNumber }) {
         <Button
           text={state.birthClicked ? "Gimdymai" : "Gimdymai V"}
           unique_id={"birthsOne"}
-          clickEvent={
-            () => {
-              dispach({
-                type: "birth",
-              });
-            }
-
-            //  setClicked(!birthClicked)
-          }
+          clickEvent={() => {
+            dispach({
+              type: "birth",
+            });
+          }}
         />
 
         <Button
           text={state.treatmentClicked ? "Gydymas" : "Gydymas V"}
           unique_id={"treatment"}
-          clickEvent={
-            () => {
-              dispach({
-                type: "treatment",
-              });
-            }
-            // setPresClicked(!treatmentClicked)
-          }
+          clickEvent={() => {
+            dispach({
+              type: "treatment",
+            });
+          }}
         />
 
         <TableContainer component={Paper}>
@@ -120,33 +105,17 @@ export default function AboutBirthTable({ sheepNumber }) {
             </TableBody>
           </Table>
         </TableContainer>
-        
+
         <div
           id="births"
           className={` ${state.birthClicked ? "hideDiv" : "main"} `}
         >
-          {/* <div id="births" className="main"> */}
-          {/*Cia reikia gauti duomenis is kitos lenteles /////////////////////////*/}
           <div style={{ margin: "10%" }}>
             {" "}
-            <BirthTable sheepNumber={'GB12456'} />{" "}
-            {/* <BirthTable sheepNumber={params.number} />{" "} */}
+            <BirthTable sheepNumber={"GB12456"} />{" "}
           </div>
-                 </div>
-
+        </div>
       </>
     );
   }
-
-  
-  //   function createData(name, value) {
-  //     return { name, value };
-  //   }
-
-  //   const rows = [
-  //     createData("Gimdymo data", 'new Date(getData[0].date).toISOString().split("T")[0]'),
-  //         createData("Ėriukų skaičius", 'getData[0].lambs_number'),
-  //     createData("Pastabos", "getData[0].notes"),
-
-  //   ];
 }

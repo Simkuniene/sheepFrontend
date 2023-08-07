@@ -9,14 +9,11 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import LinkComp from '../LinkComp/LinkComp';
 import { Link } from '@mui/material';
-//import themeGreen from "../ThemeUi/ThemeUi";
+
 
 const drawerWidth = 240;
 //const navItems = ['Avys', 'Pašarai', 'Vaistai'];
@@ -45,8 +42,7 @@ function DrawerAppBar(props) {
              <Link href={item.path} underline="none">
               {item.name}
             </Link>
-               {/* <ListItemText primary={item.name} /> */}
-            </ListItemButton>
+                  </ListItemButton>
           </ListItem>
         ))}
       </List>
@@ -81,11 +77,7 @@ function DrawerAppBar(props) {
              <Link href={item.path} key={item.name+"nav"} underline="none" color="#fff" margin="10px">
               {item.name}
             </Link>
-              //  <LinkComp key={item.name+"nav"} path={item.path} name={item.name} /> 
-              // <Button key={item} sx={{ color: '#fff' }}>
-              //   {item}
-              // </Button>
-            ))}
+                          ))}
           </Box>
         </Toolbar>
       </AppBar>
@@ -108,10 +100,7 @@ function DrawerAppBar(props) {
       </Box>
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-        {/* <Typography>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique unde
-          
-        </Typography> */}
+        
       </Box>
     </Box>
   );

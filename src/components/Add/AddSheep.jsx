@@ -1,64 +1,86 @@
 import * as React from "react";
+import { useFormValidate } from "../../customHooks/useFormValidate.js";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import ButtonSub from "../Button/ButtonSub.jsx";
 import "./add.css";
-import { useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import InputLabel from "@mui/material/InputLabel";
 
 function AddSheep() {
-  const [sheepData, setMyData] = useState({
-    number: "",
-    gender: 0,
-    birth_date: 0,
-    mother: "",
-    father: "",
-    registration_date: 0,
-    breed: "",
-  });
+  function validate(formData) {
+    let errors = {};
 
-  //const order = {};
-  let oldSheepData = {};
+    if (!formData.birth_date) {
+      errors.birth_date = "Neįvesta gimimo data";
+    }
 
-  const inputChange = (event) => {
-    console.log(event.target);
-    const { name, value } = event.target;
-    //... pridedu visus buvusius ordertData elementus ir ...
+    if (!formData.mother) {
+      errors.mother = "Neįvestas motinos numeris";
+    } else {
+      if (formData.mother.length !== 8) {
+        errors.mother = "Numeris turi turėti 8 simbolius";
+      }
+    }
 
-    setMyData((oldSheepData) => ({
-      ...oldSheepData,
-      [name]: value,
-    }));
-    console.log(name, value);
-    console.log(oldSheepData);
-    console.log(sheepData);
-  };
+    if (!formData.father) {
+      errors.father = "Neįvestas tėvo numeris";
+    } else {
+      if (formData.father.length !== 8) {
+        errors.father = "Numeris turi turėti 8 simbolius";
+      }
+    }
 
-  const addSheep = (event) => {
-    event.preventDefault();
-    console.log(sheepData);
+    if (!formData.registration_date) {
+      errors.registration_date = "Neįvesta registracijos data";
+    }
 
+    if (!formData.breed) {
+      errors.breed = "Neįvesta veislė";
+    }
+
+    if (!formData.gender) {
+      errors.gender = "Neįvesta lytis";
+    }
+
+    if (!formData.number) {
+      errors.number = "Neįvestas avies numeris";
+    } else {
+      if (formData.number.length !== 8) {
+        errors.number = "Numeris turi turėti 8 simbolius";
+      }
+    }
+
+    return errors;
+  }
+
+  const addSheep = (formValues) => {
     fetch("http://localhost:3000/addSheep/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(sheepData),
+      body: JSON.stringify(formValues),
     })
       .then((res) => res.json())
-      .then((data) => alert("Avis prideta"))
-
+      .then((data) => window.location.assign("/"))
       .catch((err) => {
         console.error(err);
       });
   };
 
+  const { errors, handleChange, handleSubmit } = useFormValidate(
+    validate,
+    addSheep
+  );
+
   return (
     <div className="App">
+      <h2>Pridėti įrašą apie avį</h2>
       <Box
         component="form"
         sx={{
@@ -66,15 +88,13 @@ function AddSheep() {
         }}
         noValidate
         autoComplete="off"
-        onSubmit={addSheep}
+        onSubmit={handleSubmit}
       >
         <>
-          {/* <form onSubmit={addSheep}>   */}
           <FormControl>
             <FormLabel id="demo-radio-buttons-group-label">Lytis</FormLabel>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="1"
               name="radio-buttons-group"
             >
               <FormControlLabel
@@ -82,93 +102,104 @@ function AddSheep() {
                 control={<Radio />}
                 label="Avinas (1)"
                 name="gender"
-                onChange={inputChange}
+                onChange={handleChange}
               />
               <FormControlLabel
                 value="2"
                 control={<Radio />}
                 name="gender"
                 label="Avis (2)"
-                onChange={inputChange}
+                onChange={handleChange}
               />
               <FormControlLabel
                 value="4"
                 control={<Radio />}
                 label="Ėriavedė (4)"
                 name="gender"
-                onChange={inputChange}
+                onChange={handleChange}
               />
             </RadioGroup>
-            </FormControl>
+          </FormControl>
+          <br />
+          {errors && <span className="errorDiv">{errors.gender}</span>}
           <br />
 
-         
-
-                 {/* <Input type="radio" id="gender1" name="gender" value="1" onChange={inputChange} label="Avinas (1)" required/><br/>
-       <Input type="radio" id="gender2" name="gender" value="2" onChange={inputChange} label="Avis (2)" required/><br/>
-       <Input type="radio" id="gender4" name="gender" value="4" onChange={inputChange} label="Ėriavedė (4)" required/><br/> */}
-          {/* <Input type="number" id="gender" name="gender"  onChange={inputChange} required/><br/> */}
-          
           <Input
             type="text"
             id="number"
             name="number"
             placeholder="Numeris"
-            onChange={inputChange}
+            onChange={handleChange}
             required={true}
+            pattern="[A-Za-z]{2}\d{4}"
           />
           <br />
-          
+          {errors && <span className="errorDiv">{errors.number}</span>}
+          <br />
+
+          <InputLabel>Gimimo data:</InputLabel>
           <Input
             type="date"
             id="birth_date"
             name="birth_date"
             placeholder="Gimimo data"
-            onChange={inputChange}
+            onChange={handleChange}
             required={true}
           />
+          <br />
+          {errors && <span className="errorDiv">{errors.birth_date}</span>}
           <br />
           <Input
             type="text"
             id="mother"
             name="mother"
             placeholder="Motina"
-            onChange={inputChange}
+            onChange={handleChange}
             required={true}
           />
+          <br />
+          {errors && <span className="errorDiv">{errors.mother}</span>}
           <br />
           <Input
             type="text"
             id="father"
             name="father"
             placeholder="Tėvas"
-            onChange={inputChange}
+            onChange={handleChange}
             required={true}
           />
           <br />
+          {errors && <span className="errorDiv">{errors.father}</span>}
+          <br />
+          <InputLabel>Registracijos data:</InputLabel>
           <Input
             type="date"
             id="registration_date"
             name="registration_date"
             placeholder="Registracijos data"
-            onChange={inputChange}
+            onChange={handleChange}
             required={true}
           />
+          <br />
+          {errors && (
+            <span className="errorDiv">{errors.registration_date}</span>
+          )}
           <br />
           <Input
             type="text"
             id="breed"
             name="breed"
             placeholder="Veislė"
-            onChange={inputChange}
+            onChange={handleChange}
             required={true}
           />
           <br />
+          {errors && (
+            <span className="errorDiv">{errors.registration_date}</span>
+          )}
           <br />
-         
-          <ButtonSub text="Pridėti įrašą apie avį" />
 
-          {/* </form> */}
+          <ButtonSub text="Pridėti įrašą apie avį" />
         </>
       </Box>
     </div>

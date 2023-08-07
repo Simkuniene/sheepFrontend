@@ -1,20 +1,11 @@
 import "./Pages.css";
-//import LinkComp from "../LinkComp/LinkComp.jsx";
-//import Medications from "../Medications/Medications.jsx";
-////import AddMedication from "../AddPet/AddMedication.jsx";
-import { useContext } from "react";
 import {
   RouterProvider,
   createBrowserRouter,
-  // useParams,
-  //  Link,
 } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import { ThemeContext } from "../Theme/Provider";
-import Head from "../Head/Head";
 import SheepList from "../SheepList/SheepList.jsx";
 import SheepListDelete from "../SheepList/SheepListDelete.jsx";
-import { Box, Container } from "@mui/material";
 import themeGreen from "../ThemeUi/ThemeUi.jsx";
 import DrawerAppBar from "../muiComponents/DrawerAppBar";
 import AddSheep from "../Add/AddSheep";
@@ -26,9 +17,7 @@ import AddTreatment from "../Add/AddTreatment";
 import OneSheep from "../OneSheep/OneSheep";
 import UpdateSheep from "../Add/UpdateSheep";
 
-//import Link from "@mui/material/Link";
-
-const routes_komponentas = createBrowserRouter([
+const routes_comp = createBrowserRouter([
   {
     path: "/",
     element: (
@@ -57,7 +46,7 @@ const routes_komponentas = createBrowserRouter([
       <div>
         <ThemeProvider theme={themeGreen}>
           <DrawerAppBar />
-          <h3>Pasarai</h3>
+          <h3>Čia bus pašarų normos</h3>
         </ThemeProvider>
         {/* <Food /> */}
       </div>
@@ -82,15 +71,13 @@ const routes_komponentas = createBrowserRouter([
       <div>
         <ThemeProvider theme={themeGreen}>
           <DrawerAppBar />
-          <h1>Prideti avi</h1>
           <AddSheep />
         </ThemeProvider>
       </div>
     ),
   },
- 
+
   {
-    //path: "sheepupdate/:number",
     path: "/sheepupdate/:number",
     element: (
       <div>
@@ -108,7 +95,7 @@ const routes_komponentas = createBrowserRouter([
       <div>
         <ThemeProvider theme={themeGreen}>
           <DrawerAppBar />
-                 <AddBirth />
+          <AddBirth />
         </ThemeProvider>
       </div>
     ),
@@ -120,7 +107,7 @@ const routes_komponentas = createBrowserRouter([
       <div>
         <ThemeProvider theme={themeGreen}>
           <DrawerAppBar />
-                 <AddTreatment />
+          <AddTreatment />
         </ThemeProvider>
       </div>
     ),
@@ -173,7 +160,7 @@ const routes_komponentas = createBrowserRouter([
 function Pages() {
   return (
     <div>
-      <RouterProvider router={routes_komponentas}></RouterProvider>
+      <RouterProvider router={routes_comp}></RouterProvider>
     </div>
   );
 }

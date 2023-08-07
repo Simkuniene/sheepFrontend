@@ -5,7 +5,6 @@ import TextField from "@mui/material/TextField";
 function Search({ changeFn }) {
   return (
     <Box
-      
       component="form"
       sx={{
         "& > :not(style)": {
@@ -14,7 +13,7 @@ function Search({ changeFn }) {
         },
       }}
       //noValidate0
-     
+
       autoComplete="off"
     >
       <TextField
@@ -25,16 +24,6 @@ function Search({ changeFn }) {
         onChange={changeFn}
       />
     </Box>
-
-    //  <input
-    //             className="inputClass"
-    //             type="text"
-    //             id="search"
-    //             name="search"
-
-    //             // value={medData.name}
-    //             onChange={changeFn}
-    //           />
   );
 }
 

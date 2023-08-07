@@ -3,64 +3,43 @@ import ButtonSub from "../Button/ButtonSub.jsx";
 import "./add.css";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
-//import { useState, useReducer } from "react";
-//import { useEffect, useState } from "react";
+import InputLabel from "@mui/material/InputLabel";
 
 /////////////////////////////////////////////////////////////////////////
 function AddTreatment() {
-  // const { state, isValid } = useFormValidate();
-
-  // const [medData, setMyData] = useState({
-  //   name: "",
-  //   description: "",
-  // });
+  const localStorageData = JSON.parse(localStorage.getItem("sheepData"));
 
   function validate(formData) {
     let errors = {};
 
-    console.log("formData from vaditade");
-    console.log(formData);
-
-    if (!formData.name) {
-      errors.name = "Neįvestas vaisto pavadinimas";
+    if (!formData.start) {
+      errors.start = "Neįvestas pradžia gydymo";
+    }
+    if (!formData.finish) {
+      errors.finish = "Neįvestas pabaiga gydymo";
     }
     if (!formData.dosage) {
       errors.dosage = "Neįvestas vaisto dozavimas";
     }
-
-    if (!formData.description) {
-      errors.description = "Neįvestas vaisto aprašymas";
+    if (!formData.withdrawal) {
+      errors.withdrawal = "Neįvesta vaisto išlauka";
+    }
+    if (!formData.medicine) {
+      errors.medicine = "Neįvestas vaisto pavadinimas";
     } else {
-      if (formData.description.length < 10) {
-        errors.description = "Aprašyme turi buti ne mažiau 10 simboliu";
+      if (formData.medicine.length < 3) {
+        errors.medicine = "Pavadinime turi buti ne mažiau 3 simbolių";
       }
     }
-    console.log("errors from vaditade");
-    console.log(errors);
+
     return errors;
   }
-
-  // function formErrors(errors) {
-
-  //   alert(`Klaidos: ${errors.name}  ${errors.description}`);
-  // }
-
-  //   function formErrors() {
-  //     alert(`Įvesdami duomenis padarėte klaidų`);
-  //   }
 
   ///////////
 
   const addMed = (formValues) => {
-    //console.log(name, value);
-
-    console.log(" formValues from addMed");
-    console.log(formValues);
-
-    // console.log(errors.name + " name");//undefined
-    // console.log(errors.description + " description");
-
-    fetch("http://localhost:3000/addMeds/", {
+    formValues.number = localStorageData.number;
+    fetch("http://localhost:3000/addTreatment/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,23 +47,22 @@ function AddTreatment() {
       body: JSON.stringify(formValues),
     })
       .then((res) => res.json())
-      .then((data) => alert(formValues.name + " vaistas pridetas"))
-      /// cia reik refreshint puslapi arba išvalyti forma
+      .then((data) =>
+        window.location.assign("/sheep/" + localStorageData.number)
+      )
       .catch((err) => {
         console.error(err);
       });
   };
 
-  //const { formValues, errors, handleChange, handleSubmit } = useFormValidate(
   const { errors, handleChange, handleSubmit } = useFormValidate(
-    { name: "", description: "" },
     validate,
     addMed
-    // formErrors
   );
 
   return (
     <div className="App">
+      <h2>{localStorageData.number}</h2>
       <Box
         component="form"
         sx={{
@@ -102,8 +80,9 @@ function AddTreatment() {
           onChange={handleChange}
         />
         <br />
-        {/* {errors && <span className="errorDiv">{errors.medicine}</span>} */}
+        {errors && <span className="errorDiv">{errors.medicine}</span>}
         <br />
+        <InputLabel>Pradėta varoti vaistus:</InputLabel>
         <Input
           type="date"
           id="start"
@@ -112,6 +91,9 @@ function AddTreatment() {
           onChange={handleChange}
         />
         <br />
+        {errors && <span className="errorDiv">{errors.start}</span>}
+        <br />
+        <InputLabel>Baigta varoti vaistus:</InputLabel>
         <Input
           type="date"
           id="finish"
@@ -119,11 +101,11 @@ function AddTreatment() {
           placeholder="Baigta"
           onChange={handleChange}
         />
+
         <br />
+        {errors && <span className="errorDiv">{errors.finish}</span>}
         <br />
 
-        {/* {errors && <span className="errorDiv">{errors.finish}</span>} */}
-        <br />
         <Input
           type="text"
           id="dosage"
@@ -132,6 +114,9 @@ function AddTreatment() {
           onChange={handleChange}
         />
         <br />
+        {errors && <span className="errorDiv">{errors.dosage}</span>}
+        <br />
+        <InputLabel>Išlauka:</InputLabel>
         <Input
           type="date"
           id="withdrawal"
@@ -140,15 +125,10 @@ function AddTreatment() {
           onChange={handleChange}
         />
         <br />
-        <Input
-          type="text"
-          id="notes"
-          name="notes"
-          placeholder="Pastabos"
-          onChange={handleChange}
-        />
+        {errors && <span className="errorDiv">{errors.withdrawal}</span>}
+        <br />
 
-        <ButtonSub text="Pridėti medikamentą" />
+        <ButtonSub text="Pridėti" />
       </Box>
     </div>
   );

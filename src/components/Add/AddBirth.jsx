@@ -1,61 +1,74 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Input from "@mui/material/Input";
+import { useFormValidate } from "../../customHooks/useFormValidate.js";
 import ButtonSub from "../Button/ButtonSub.jsx";
 import "./add.css";
-import { useState } from "react";
+import Box from "@mui/material/Box";
+import Input from "@mui/material/Input";
+import InputLabel from '@mui/material/InputLabel';
 
 
+/////////////////////////////////////////////////////////////////////////
 function AddBirth() {
-  const [sheepData, setMyData] = useState({
-    number: "",
-    gender: 0,
-    birth_date: 0,
-    mother: "",
-    father: "",
-    registration_date: 0,
-    breed: "",
-  });
+  const localStorageData = JSON.parse(localStorage.getItem("sheepData"));
+  console.log("localStorageData");
+  console.log(localStorageData);
 
-  //const order = {};
-  let oldSheepData = {};
+  function validate(formData) {
+    let errors = {};
 
-  const inputChange = (event) => {
-    console.log(event.target);
-    const { name, value } = event.target;
-    //... pridedu visus buvusius ordertData elementus ir ...
+    console.log("formData from vaditade");
+    console.log(formData);
 
-    setMyData((oldSheepData) => ({
-      ...oldSheepData,
-      [name]: value,
-    }));
-    console.log(name, value);
-    console.log(oldSheepData);
-    console.log(sheepData);
-  };
+    if (!formData.date) {
+      errors.date = "Neįvesta gimdymo data";
+    }
+    if (!formData.lambs_number) {
+      errors.lambs_number = "Neįvestas ėriukų skaičius";
+    }
+    
+    return errors;
+  }
 
-  const addSheep = (event) => {
-    event.preventDefault();
-    console.log(sheepData);
+  ///////////
+
+  const addMed = (formValues) => {
+    //console.log(name, value);
+
+    console.log(" formValues from addMed");
+    console.log(formValues);
+    formValues.number = localStorageData.number;
+    console.log(" formValues with number");
+    console.log(formValues);
+
+    // console.log(errors.name + " name");//undefined
+    // console.log(errors.description + " description");
 
     fetch("http://localhost:3000/addBirth/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(sheepData),
+      body: JSON.stringify(formValues),
     })
       .then((res) => res.json())
-      .then((data) => alert("Gimdymas įvestas"))
-
+      .then((data) =>
+        window.location.assign("/sheep/" + localStorageData.number)
+      )
       .catch((err) => {
         console.error(err);
       });
   };
 
+  //const { formValues, errors, handleChange, handleSubmit } = useFormValidate(
+  const { errors, handleChange, handleSubmit } = useFormValidate(
+    //{ name: "", description: "" },
+    validate,
+    addMed
+    // formErrors
+  );
+
   return (
     <div className="App">
-      <h2>Pridėti gimdymą</h2>
+      <h2>{localStorageData.number}</h2>
       <Box
         component="form"
         sx={{
@@ -63,59 +76,42 @@ function AddBirth() {
         }}
         noValidate
         autoComplete="off"
-        onSubmit={addSheep}
+        onSubmit={handleSubmit}
       >
         <>
-          {/* <form onSubmit={addSheep}>   */}
-          
-          <br />
-          
-          <Input
-            type="text"
-            id="number"
-            name="number"
-            placeholder="Numeris"
-            onChange={inputChange}
-            required={true}
-          />
-          <br />
-          
+        <InputLabel>Gimdymo data</InputLabel>
           <Input
             type="date"
             id="date"
             name="date"
             placeholder="Gimdymo data"
-            onChange={inputChange}
-            required={true}
+            onChange={handleChange}
           />
+          <br />
+          {errors && <span className="errorDiv">{errors.date}</span>}
           <br />
           <Input
             type="text"
             id="lambs_number"
             name="lambs_number"
             placeholder="Ėriukų skaičius"
-            onChange={inputChange}
-            required={true}
+            onChange={handleChange}
           />
+          <br />
+          {errors && <span className="errorDiv">{errors.lambs_number}</span>}
           <br />
           <Input
             type="text"
             id="notes"
             name="notes"
             placeholder="Pastabos"
-            onChange={inputChange}
-            required={true}
+            onChange={handleChange}
           />
           <br />
-          
           <br />
-         
           <ButtonSub text="Pridėti įrašą apie gimdymą" />
-
-          {/* </form> */}
         </>
       </Box>
-      
     </div>
   );
 }

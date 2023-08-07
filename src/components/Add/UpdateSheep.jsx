@@ -10,48 +10,29 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { useParams } from "react-router-dom";
+import InputLabel from "@mui/material/InputLabel";
 
 function UpdateSheep() {
- // const storedData = localStorage.getItem('userData');
-  const localStorageData = JSON.parse(localStorage.getItem('sheepData'));
-  console.log('localStorageData');
-  console.log(localStorageData);
-
-  // const [sheepData, setMyData] = useState({
-  //   number: "AA0",
-  //   gender: "",
-  //   birth_date: 0,
-  //   mother: "",
-  //   father: "",
-  //   registration_date: 0,
-  //   breed: "",
-  // });
-
+  const localStorageData = JSON.parse(localStorage.getItem("sheepData"));
   const [sheepData, setMyData] = useState({
-    localStorageData
+    localStorageData,
   });
 
   const params = useParams();
-  
-  let oldSheepData = {};
+
+  //let oldSheepData = {};
 
   const inputChange = (event) => {
-    console.log(event.target);
     const { name, value } = event.target;
-    //... pridedu visus buvusius ordertData elementus ir ...
 
     setMyData((oldSheepData) => ({
       ...oldSheepData,
       [name]: value,
     }));
-    console.log(name, value);
-    console.log(oldSheepData);
-    console.log(sheepData);
   };
 
   const updateSheep = (event) => {
     event.preventDefault();
-    console.log(sheepData);
 
     fetch("http://localhost:3000/sheepupdate/" + params.number, {
       method: "PUT",
@@ -61,7 +42,9 @@ function UpdateSheep() {
       body: JSON.stringify(sheepData),
     })
       .then((res) => res.json())
-      .then((data) => alert("Duomenys atnaujinti"))
+      .then((data) =>
+        window.location.assign("/sheep/" + localStorageData.number)
+      )
 
       .catch((err) => {
         console.error(err);
@@ -70,7 +53,7 @@ function UpdateSheep() {
 
   return (
     <div className="App">
-        <h2>{localStorageData.number}</h2>
+      <h2>{localStorageData.number}</h2>
       <Box
         component="form"
         sx={{
@@ -80,26 +63,12 @@ function UpdateSheep() {
         autoComplete="off"
         onSubmit={updateSheep}
       >
-        <>
-          {/* <form onSubmit={addSheep}>   */}
-          {/* <Input
-            type="text"
-            id="number"
-            name="number"
-          defaultValue={localStorageData.number}
-           //value={params.number}
-            placeholder="Numeris"
-            onChange={inputChange}
-            required={true}
-            disabled={true}
-          /> */}
-          <br />
-
+        <div>
           <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">Lytis</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label">Lytis: </FormLabel>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
-             defaultValue={localStorageData.gender}
+              defaultValue={localStorageData.gender}
               name="radio-buttons-group"
             >
               <FormControlLabel
@@ -124,20 +93,23 @@ function UpdateSheep() {
                 onChange={inputChange}
               />
             </RadioGroup>
-            </FormControl>
+          </FormControl>
+          <br />
           <br />
 
-          
+          <InputLabel sx={{ display: "inline" }}>Gimimo data: </InputLabel>
           <Input
             type="date"
             id="birth_date"
             name="birth_date"
-            placeholder="Gimimo data"
+            placeholder="Gimimo data:"
             defaultValue={localStorageData.birth_date}
             onChange={inputChange}
             required={true}
           />
           <br />
+          <br />
+          <InputLabel sx={{ display: "inline" }}>Motina: </InputLabel>
           <Input
             type="text"
             id="mother"
@@ -148,25 +120,24 @@ function UpdateSheep() {
             required={true}
           />
           <br />
-          {/* <input type="text"
-            id="father"
-            name="father"
-           // defaultValue="AA46894"
-            value="AB46894"
-            placeholder="Tėvas"
-            onChange={inputChange} /> */}
+          <br />
 
+          <InputLabel sx={{ display: "inline" }}>Tėvas: </InputLabel>
           <Input
             type="text"
             id="father"
             name="father"
-         //   defaultValue="AB46894"
+            //   defaultValue="AB46894"
             placeholder="Tėvas"
             defaultValue={localStorageData.father}
             onChange={inputChange}
             required={true}
           />
           <br />
+          <br />
+          <InputLabel sx={{ display: "inline" }}>
+            Registracijos data:{" "}
+          </InputLabel>
           <Input
             type="date"
             id="registration_date"
@@ -177,6 +148,8 @@ function UpdateSheep() {
             required={true}
           />
           <br />
+          <br />
+          <InputLabel sx={{ display: "inline" }}>Veislė: </InputLabel>
           <Input
             type="text"
             id="breed"
@@ -188,11 +161,9 @@ function UpdateSheep() {
           />
           <br />
           <br />
-         
-          <ButtonSub text="Pridėti įrašą apie avį" />
 
-          {/* </form> */}
-        </>
+          <ButtonSub text="Atnaujinti įrašą apie avį" />
+        </div>
       </Box>
     </div>
   );

@@ -34,16 +34,12 @@ export function useFech() {
     isLoading: true,
   });
 
-  //   const [getData, setgetData] = useState([]);
-  //   const [getError, setError] = useState(null);
-  //   const [isLoading, setLoading] = useState(true);
-
   async function myFetch(url) {
     dispach({
       type: "Loading",
       loading: true,
     });
-    //setLoading(true);
+
     try {
       const res = await fetch(url, {
         method: "GET",
@@ -53,40 +49,29 @@ export function useFech() {
       });
 
       const data = await res.json();
-      //   .then((data) => setgetData(data));
+
       if (data.error) {
         dispach({
           type: "Error",
           error: data,
         });
-        //setError(data);
       } else {
         dispach({
           type: "Data",
           data: data,
         });
-
-        //setgetData(data);
       }
     } catch (error) {
       dispach({
         type: "Error",
         error: error,
       });
-      // setError(error);
     }
     dispach({
       type: "Loading",
       loading: false,
     });
-    // setLoading(false);
   }
 
-  //useEffect(() => {
-
-  //   myFech();
-  // }, [url]);
-
   return { ...state, myFetch };
-  // return { getData, getError, isLoading };
-} //end useFech
+}

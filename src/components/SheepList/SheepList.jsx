@@ -1,68 +1,36 @@
-import { useEffect, useReducer, useState } from "react";
-//import Button from "../Button/Button";
-import ButtonLink from "../Button/ButtonLink.jsx";
+import { useEffect } from "react";
 import "./SheepList.css";
 import { Link } from "react-router-dom";
 import { useFech } from "../../customHooks/useFech";
-import ClickBox from "../ClickBox/ClickBox";
 import Pagination from "../Pagination/Pagination";
 import usePagination from "../../customHooks/usePagination";
 import Search from "../Search/Search";
 import useSearch from "../../customHooks/useSearch";
-
 import * as React from "react";
 import Box from "@mui/material/Box";
-//import Card from "@mui/material/Card";
-//import CardActions from "@mui/material/CardActions";
-//import CardContent from "@mui/material/CardContent";
-//import Button from "@mui/material/Button";
-//import Typography from "@mui/material/Typography";
-//import { Margin } from "@mui/icons-material";
-//import Stack from "@mui/material/Stack";
 import { ThemeProvider } from "@mui/material/styles";
 import themeGreen from "../ThemeUi/ThemeUi";
 import {
-  Container,
   Button,
   Card,
   CardActions,
   CardContent,
   Stack,
   Typography,
-  Paper,
 } from "@mui/material";
 import ButtonLinkMui from "../Button/ButtonLinkMui.jsx";
-import HowBirthTable from "../muiComponents/HowBirthTable.jsx";
-import AboutBirth from "../muiComponents/AboutBirth.jsx";
-//import ButtonAppBar from "../muiComponents/ButtonAppBar.jsx";
-//import DrawerAppBar from "../muiComponents/DrawerAppBar.jsx";
-//import SimplePaper from "../muiComponents/SimplePaper.jsx";
 
 ////////////////////
-
-// const bull = (
-//   <Box
-//     component="span"
-//     sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-//   >
-//     •
-//   </Box>
-// );
 
 function SheepList() {
   const url = "http://localhost:3000/sheep";
   const { getData, getError, isLoading, myFetch } = useFech();
-  // const [showClickBox, setshowClickBox] = useState(false);
-  //const [deleteNumber, setDeleteNumber] = useState(false);
 
   useEffect(() => {
     myFetch(url);
   }, []);
 
   const { searchChange, filterName } = useSearch(getData);
-
-  // console.log("filterName from useSearch");
-  // console.log(filterName);
 
   const {
     maxPages,
@@ -79,9 +47,7 @@ function SheepList() {
     return <p>Loading...</p>;
   }
 
- 
   if (getError != null) {
-    console.log(getError);
     return <p>Klaida: {getError.error}</p>;
   } else {
     return (
@@ -173,9 +139,6 @@ function SheepList() {
               isNextActive={isNextActive}
             />
           </div>
-
-          <AboutBirth />
-
         </ThemeProvider>
       </div>
     );

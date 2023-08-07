@@ -7,6 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function ResponsiveDialog({ keyProps, delItem, handleDelete }) {
   const [open, setOpen] = React.useState(false);
@@ -22,10 +23,11 @@ export default function ResponsiveDialog({ keyProps, delItem, handleDelete }) {
   };
 
   return (
-    <div>
+    <div style={{ display: "inline" }}>
       <Button key={keyProps} variant="contained" onClick={handleClickOpen}>
-        Ištrinti
+        <DeleteIcon />
       </Button>
+
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -37,7 +39,7 @@ export default function ResponsiveDialog({ keyProps, delItem, handleDelete }) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Paspaudus "Taip" bus panaikinti visi įrasai apie {delItem} avį
+            Paspaudus "Taip" bus panaikintas įrašas apie {delItem} avį
           </DialogContentText>
         </DialogContent>
         <DialogActions>
