@@ -68,3 +68,35 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### About the Project (Lithuanian)
+
+Ši sistema skirta avių ūkio turėtojams. BackEnd kodą galite rasti: https://github.com/Simkuniene/sheepBackend/
+Administratoriai galės kurti/peržiūrėti duomenis apie avis, jų produktyvumą, gydymui naudotus vaistus ir jų išlauką prieš skerdimą ar pieno naudojimą maistui.
+
+Backend'o resursai, kuriuos palaiko ši aplikacija:
+
+GET
+/sheep paduoda visas avis iš 'sheep' lentelės.
+/sheep/:number paduoda duomenis apie konkrečią avį, pagal avies numerį iš 'sheep' lentelės.
+/meds paduoda visus vaistus iš 'medicines' lentelės.
+/births/:number paduoda duomenis apie avies, kurios numeris nurodytas, gimdymus iš 'births' lentelės.
+/treatment/:number paduoda duomenis apie avies, kurios numeris nurodytas, naudotus vaistus iš 'treatment' lentelės.
+
+
+POST 
+/addSheep įrašo duomenis apie avį į 'sheep' lentelę.
+/addMeds įrašo duomenis apie medikamentą į 'medicines' lentelę.
+/addBirth įrašo duomenis apie gimdymą į 'births' lentelę.
+/addTreatment įrašo duomenis apie naudotus vaistus į 'treatment' lentelę.
+
+DELETE
+/deleteSheep/:id ištrina avį pagal ID iš 'sheep' lentelės.
+/deleteMed/:id ištrina vaistą pagal ID iš 'medicines' lentelės.
+
+PUT
+/sheepupdate/:number atnaujina duomenis apie avį 'sheep' lentelėje.
+
+Sistema patogi, nes galime ne tik matyti visus įrašus apie laikomas avis, bet ir spustelėjus mugtuką "Apie", gauname pilną aprašymą apie konktečią avį, visus jos ėriavimusis, naudotus vaistus, ir tų vaistų išlauką. Prireikus kažkokių dažniau naudojamų vaistų , visada bus po ranka jų aprašymas, dozės ir išlaukos terminai.
+
+
