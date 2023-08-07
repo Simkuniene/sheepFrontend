@@ -69,34 +69,30 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-### About the Project (Lithuanian)
+### About the Project
 
-Ši sistema skirta avių ūkio turėtojams. BackEnd kodą galite rasti: https://github.com/Simkuniene/sheepBackend/
-Administratoriai galės kurti/peržiūrėti duomenis apie avis, jų produktyvumą, gydymui naudotus vaistus ir jų išlauką prieš skerdimą ar pieno naudojimą maistui.
+This system is designed for sheep farmers. You can find the BackEnd code here: https://github.com/Simkuniene/sheepBackend/. Administrators will be able to create/view data about sheep, their productivity, medications used for treatment, and their condition before shearing or using milk for food.
 
-Backend'o resursai, kuriuos palaiko ši aplikacija:
+The BackEnd resources supported by this application are as follows:
 
 GET
-/sheep paduoda visas avis iš 'sheep' lentelės.
-/sheep/:number paduoda duomenis apie konkrečią avį, pagal avies numerį iš 'sheep' lentelės.
-/meds paduoda visus vaistus iš 'medicines' lentelės.
-/births/:number paduoda duomenis apie avies, kurios numeris nurodytas, gimdymus iš 'births' lentelės.
-/treatment/:number paduoda duomenis apie avies, kurios numeris nurodytas, naudotus vaistus iš 'treatment' lentelės.
+/sheep retrieves all sheep from the 'sheep' table.
+/sheep/:number retrieves data about a specific sheep based on its number from the 'sheep' table.
+/meds retrieves all medications from the 'medicines' table.
+/births/:number retrieves data about the births of a sheep specified by the given number from the 'births' table.
+/treatment/:number retrieves data about the medications used for a sheep specified by the given number from the 'treatment' table.
 
-
-POST 
-/addSheep įrašo duomenis apie avį į 'sheep' lentelę.
-/addMeds įrašo duomenis apie medikamentą į 'medicines' lentelę.
-/addBirth įrašo duomenis apie gimdymą į 'births' lentelę.
-/addTreatment įrašo duomenis apie naudotus vaistus į 'treatment' lentelę.
+POST
+/addSheep adds sheep data to the 'sheep' table.
+/addMeds adds medication data to the 'medicines' table.
+/addBirth adds data about a birth to the 'births' table.
+/addTreatment adds data about medications used to the 'treatment' table.
 
 DELETE
-/deleteSheep/:id ištrina avį pagal ID iš 'sheep' lentelės.
-/deleteMed/:id ištrina vaistą pagal ID iš 'medicines' lentelės.
+/deleteSheep/:id deletes a sheep with the given ID from the 'sheep' table.
+/deleteMed/:id deletes a medication with the given ID from the 'medicines' table.
 
 PUT
-/sheepupdate/:number atnaujina duomenis apie avį 'sheep' lentelėje.
-
-Sistema patogi, nes galime ne tik matyti visus įrašus apie laikomas avis, bet ir spustelėjus mugtuką "Apie", gauname pilną aprašymą apie konktečią avį, visus jos ėriavimusis, naudotus vaistus, ir tų vaistų išlauką. Prireikus kažkokių dažniau naudojamų vaistų , visada bus po ranka jų aprašymas, dozės ir išlaukos terminai.
-
+/sheepupdate/:number updates data about a sheep in the 'sheep' table.
+This system is convenient because not only can we see all the records about the kept sheep, but also by clicking the "About" button, we get a full description of a particular sheep, all its offspring, medications used, and the withdrawal periods of those medications. If necessary, information about commonly used medications will always be readily available, including descriptions, doses, and withdrawal terms.
 
